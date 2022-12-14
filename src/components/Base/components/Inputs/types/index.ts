@@ -4,5 +4,4 @@ export * from './Select/index';
 export * from './NumberInput';
 export * from './RadioGroup';
 export * from './Checkbox';
-export * from './Switcher';
 export * from './FileInput';

@@ -1,6 +1,5 @@
 import { parseInt } from 'lodash';
 import logger from './modules/logger';
-import { Number } from 'bitcoinjs-lib/types/types';
 
 const log = logger.module('config');
 
