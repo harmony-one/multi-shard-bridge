@@ -22,6 +22,7 @@ export class UserStoreEx extends StoreConstructor {
   public status: statusFetching;
 
   @observable error: string = '';
+  @observable providerPromise = Promise.resolve(true);
   @observable public isMetaMask = false;
   private provider: any;
 
@@ -67,7 +68,7 @@ export class UserStoreEx extends StoreConstructor {
     }
 
     autorun(() => {
-      if (this.isNetworkActual && this.isMetamask) {
+      if (this.isMetamask) {
         this.signInMetamask();
       }
     });
@@ -75,22 +76,7 @@ export class UserStoreEx extends StoreConstructor {
 
   @action
   public updateBalance() {
-    if (this.isAuthorized) {
-      this.getBalances();
-    }
-  }
-
-  @computed public get isNetworkActual() {
-    return true;
-    switch (process.env.NETWORK) {
-      case 'testnet':
-        return Number(this.metamaskChainId) === 1666700000;
-
-      case 'mainnet':
-        return Number(this.metamaskChainId) === 1666600000;
-    }
-
-    return false;
+    this.getBalances();
   }
 
   @computed public get isMetamask() {
@@ -139,52 +125,55 @@ export class UserStoreEx extends StoreConstructor {
   }
 
   @action.bound
+  public async registerProvider(): Promise<boolean> {
+    if (this.provider) {
+      return true;
+    }
+
+    const provider = await detectEthereumProvider();
+
+    // @ts-ignore
+    if (provider !== window.ethereum) {
+      console.error('Do you have multiple wallets installed?');
+    }
+
+    if (!provider) {
+      this.setError('Metamask not found');
+      throw new Error('Metamask not found');
+    }
+
+    this.provider = provider;
+
+    this.provider.on('accountsChanged', this.handleAccountsChanged);
+    this.provider.on('chainChanged', chainId => {
+      this.metamaskChainId = Number(chainId);
+    });
+
+    this.provider.on('disconnect', () => {
+      console.log('### disconnect');
+      this.isAuthorized = false;
+      this.address = null;
+    });
+
+    return true;
+  }
+
+  @action.bound
   public async signInMetamask(isNew = false) {
     try {
       this.error = '';
-
-      const provider = await detectEthereumProvider();
-
-      // @ts-ignore
-      if (provider !== window.ethereum) {
-        console.error('Do you have multiple wallets installed?');
-      }
-
-      if (!provider) {
-        return this.setError('Metamask not found');
-      }
-
-      this.provider = provider;
-
-      this.provider.on('accountsChanged', this.handleAccountsChanged);
-
-      this.provider.on(
-        'chainIdChanged',
-        chainId => (this.metamaskChainId = chainId),
-      );
-      this.provider.on(
-        'chainChanged',
-        chainId => (this.metamaskChainId = chainId),
-      );
-      this.provider.on(
-        'networkChanged',
-        chainId => (this.metamaskChainId = chainId),
-      );
-
-      this.provider.on('disconnect', () => {
-        this.isAuthorized = false;
-        this.address = null;
-      });
+      this.providerPromise = this.providerPromise.then(this.registerProvider);
+      await this.providerPromise;
+      console.log('### signin');
 
       this.provider
         .request({ method: 'eth_requestAccounts' })
         .then(async params => {
+          this.handleAccountsChanged(params);
           const web3 = new Web3(window.web3.currentProvider);
           this.metamaskChainId = await web3.eth.net.getId();
 
           this.sessionType = 'metamask';
-
-          this.handleAccountsChanged(params);
 
           if (isNew) {
             await this.provider.request({
@@ -216,7 +205,7 @@ export class UserStoreEx extends StoreConstructor {
   }
 
   @action public getBalances = async () => {
-    if (this.address && (!this.isMetamask || this.isNetworkActual)) {
+    if (this.address && this.isAuthorized) {
       try {
         this.balance = await getHmyBalance(this.address);
       } catch (e) {
