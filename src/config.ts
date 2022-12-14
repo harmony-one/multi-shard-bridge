@@ -1,5 +1,6 @@
 import { parseInt } from 'lodash';
 import logger from './modules/logger';
+import { Number } from 'bitcoinjs-lib/types/types';
 
 const log = logger.module('config');
 
@@ -11,17 +12,17 @@ interface Config {
   harmony: {
     nodeUrl: string;
     shard0: {
-      chainId: number,
-      chainName: string,
-      rpcUrl: string,
-      explorerUrl: string
-    },
+      chainId: number;
+      chainName: string;
+      rpcUrl: string;
+      explorerUrl: string;
+    };
     shard1: {
-      chainId: number,
-      chainName: string,
-      rpcUrl: string,
-      explorerUrl: string
-    },
+      chainId: number;
+      chainName: string;
+      rpcUrl: string;
+      explorerUrl: string;
+    };
     explorer: {
       transaction: string;
       address: string;
@@ -43,16 +44,16 @@ export const config: Config = {
   sentryDSN: process.env.SENTRY_DSN || '',
   harmony: {
     shard0: {
-      chainId: 1666700000,
-      chainName: 'Harmony Shard 0',
-      rpcUrl: 'https://api.s0.b.hmny.io',
-      explorerUrl: 'https://explorer.pops.one/'
+      chainId: Number(process.env.HMY_CHAIN_ID),
+      chainName: process.env.HMY_CHAIN_NAME,
+      rpcUrl: process.env.HMY_NODE_URL,
+      explorerUrl: process.env.HMY_EXPLORER,
     },
     shard1: {
-      chainId: 1666700001,
-      chainName: 'Harmony Shard 1',
-      rpcUrl: 'https://api.s1.b.hmny.io',
-      explorerUrl: 'https://explorer.pops.one/',
+      chainId: Number(process.env.HMY_CHAIN_ID_S1),
+      chainName: process.env.HMY_CHAIN_NAME_S1,
+      rpcUrl: process.env.HMY_NODE_URL_S1,
+      explorerUrl: process.env.HMY_EXPLORER,
     },
     nodeUrl: process.env.HMY_NODE_URL,
     explorer: {
