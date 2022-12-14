@@ -1,6 +1,6 @@
-import { action, computed, observable } from 'mobx';
-import utils from 'web3-utils';
+import { action, observable } from 'mobx';
 import { HmyCrossShard } from 'cross-shard-transfer.sdk';
+import { WALLET_TYPE } from 'cross-shard-transfer.sdk/lib/interfaces';
 import { StoreConstructor } from '../../stores/core/StoreConstructor';
 import { TransferConfirmModal } from './components/TransferConfirmModal';
 import { UITransactionStatus } from '../../modules/uiTransaction/UITransactionsStore';
@@ -13,8 +13,7 @@ export interface IDefaultForm {
 }
 
 const hmyCrossShard = new HmyCrossShard({
-  // @ts-expect-error TS2322: Type '"metamask"' is not assignable to type 'WALLET_TYPE'.
-  walletType: 'metamask'
+  walletType: WALLET_TYPE.METAMASK
 });
 
 export enum TRANSFER_MODE {
