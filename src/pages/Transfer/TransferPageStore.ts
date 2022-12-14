@@ -1,13 +1,25 @@
-import { StoreConstructor } from '../../stores/core/StoreConstructor';
-import { action, observable } from 'mobx';
-import { TransferConfirmModal } from './components/TransferConfirmModal';
-import { bitcoinToSatoshi, satoshiToBitcoin } from '../../services/bitcoin';
-import { UITransactionStatus } from '../../modules/uiTransaction/UITransactionsStore';
+import { action, computed, observable } from 'mobx';
 import utils from 'web3-utils';
+import { HmyCrossShard } from 'cross-shard-transfer.sdk';
+import { StoreConstructor } from '../../stores/core/StoreConstructor';
+import { TransferConfirmModal } from './components/TransferConfirmModal';
+import { UITransactionStatus } from '../../modules/uiTransaction/UITransactionsStore';
+import { getNetworkConfig, NETWORK } from '../../constants/network';
+import { MetaMaskNetworkConfig } from '../../interfaces/metamask';
 
 export interface IDefaultForm {
   oneAmount: string;
   oneAddress: string;
+}
+
+const hmyCrossShard = new HmyCrossShard({
+  // @ts-expect-error TS2322: Type '"metamask"' is not assignable to type 'WALLET_TYPE'.
+  walletType: 'metamask'
+});
+
+export enum TRANSFER_MODE {
+  SHARD0_TO_SHARD1 = 'SHARD0_TO_SHARD1',
+  SHARD1_TO_SHARD0 = 'SHARD1_TO_SHARD0'
 }
 
 export class TransferPageStore extends StoreConstructor {
@@ -16,10 +28,21 @@ export class TransferPageStore extends StoreConstructor {
     oneAddress: '',
   };
 
+  @observable
+  transferMode: TRANSFER_MODE = TRANSFER_MODE.SHARD1_TO_SHARD0;
+
   @observable status: 'init' | 'pending' | 'success' | 'cancel' | 'error' =
     'init';
 
   @observable form = this.defaultForm;
+
+  public switchDirection() {
+    if (this.transferMode === TRANSFER_MODE.SHARD0_TO_SHARD1) {
+      this.transferMode = TRANSFER_MODE.SHARD1_TO_SHARD0;
+      return;
+    }
+    this.transferMode = TRANSFER_MODE.SHARD0_TO_SHARD1;
+  }
 
   @action.bound
   public async createTransfer() {
@@ -41,10 +64,7 @@ export class TransferPageStore extends StoreConstructor {
     transferUiTx.showModal();
 
     try {
-      // const hmyClient = await getOneBTCClient(this.stores.user.sessionType);
-
-      const transferAmount = utils.toWei(this.form.oneAmount);
-      console.log('### transfer amount', transferAmount);
+      const result = await hmyCrossShard.transfer(this.form.oneAmount, this.form.oneAddress, 1);
 
       // const result = await hmyClient.transfer(
       //   this.form.oneAddress,
@@ -55,8 +75,6 @@ export class TransferPageStore extends StoreConstructor {
       //   },
       // );
 
-      // console.log('### result', result);
-
       transferUiTx.setStatusSuccess();
       transferUiTx.hideModal();
 
@@ -66,7 +84,7 @@ export class TransferPageStore extends StoreConstructor {
         width: '320px',
         noValidation: true,
         initData: {
-          // txHash: result.transactionHash,
+          txHash: result.transactionHash,
           total: this.form.oneAmount,
         },
         onApply: () => {
@@ -82,5 +100,13 @@ export class TransferPageStore extends StoreConstructor {
       console.log('### Error during create issuePageStore', err);
       this.status = 'error';
     }
+  }
+
+  getRequiredNetwork(): MetaMaskNetworkConfig {
+    if (this.transferMode === TRANSFER_MODE.SHARD1_TO_SHARD0) {
+      return getNetworkConfig(NETWORK.HARMONY_SHARD_0);
+    }
+
+    return getNetworkConfig(NETWORK.HARMONY_SHARD_1);
   }
 }

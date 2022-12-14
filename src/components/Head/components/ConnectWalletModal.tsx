@@ -50,27 +50,6 @@ export const ConnectWalletModal: React.FC<TActionModalProps> = props => {
         {/*    Sign in by OneWallet*/}
         {/*  </WalletButton>*/}
         {/*)}*/}
-        {config.wallets.onewallet &&
-          userStore.isAuthorized &&
-          userStore.sessionType === 'onewallet' && (
-            <WalletButton
-              onClick={() => {
-                // user.signOut();
-              }}
-              error={userStore.error || chainIdError}
-            >
-              <img src="/one.svg" style={{ marginRight: 15, height: 22 }} />
-              OneWallet
-              <Box pad={{ left: 'small' }}>
-                <Icon
-                  glyph="Logout"
-                  size="24px"
-                  style={{ opacity: 0.5 }}
-                  color="BlackTxt"
-                />
-              </Box>
-            </WalletButton>
-          )}
         {userStore.isAuthorized && userStore.sessionType === 'metamask' && (
           <WalletButton
             onClick={() => {

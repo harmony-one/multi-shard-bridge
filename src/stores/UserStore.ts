@@ -7,6 +7,8 @@ import { StoreConstructor } from './core/StoreConstructor';
 import { ConnectWalletModal } from '../components/Head/components/ConnectWalletModal';
 import { config } from '../config';
 import { addressIsEq } from '../utils/hmy';
+import { getNetworkConfig, getNetworkConfigByChainId, NETWORK } from '../constants/network';
+import { MetaMaskNetworkConfig } from '../interfaces/metamask';
 
 const Web3 = require('web3');
 
@@ -75,6 +77,7 @@ export class UserStoreEx extends StoreConstructor {
   }
 
   @computed public get isNetworkActual() {
+    return true;
     switch (process.env.NETWORK) {
       case 'testnet':
         return Number(this.metamaskChainId) === 1666700000;
@@ -98,6 +101,7 @@ export class UserStoreEx extends StoreConstructor {
 
   @action.bound
   handleAccountsChanged(...args) {
+    console.log('### accountChanged', args);
     if (args[0].length === 0) {
       return this.setError('Please connect to MetaMask');
     } else {
@@ -212,7 +216,7 @@ export class UserStoreEx extends StoreConstructor {
 
       try {
         const res = await getHmyBalance(this.address);
-        this.balance = res && res.result;
+        this.balance = res;
       } catch (e) {
         console.error(e);
       }
@@ -243,5 +247,34 @@ export class UserStoreEx extends StoreConstructor {
         return Promise.resolve();
       },
     });
+  }
+
+  @action
+  public async switchNetwork(networkType: NETWORK) {
+    const config = getNetworkConfig(networkType);
+
+    try {
+      await this.provider.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: config.chainId }],
+      });
+    } catch (switchError) {
+      if (switchError.code === 4902) {
+        try {
+          await this.provider.request({
+            method: 'wallet_addEthereumChain',
+            params: [config],
+          });
+        } catch (addError) {
+          console.log('### addError', addError);
+        }
+      } else {
+        console.log('### ex', switchError);
+      }
+    }
+  }
+
+  public getCurrentNetwork(): MetaMaskNetworkConfig | null {
+    return getNetworkConfigByChainId(this.metamaskChainId);
   }
 }

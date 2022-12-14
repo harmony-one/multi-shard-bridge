@@ -7,7 +7,7 @@ export const BridgeLogo = React.memo(() => {
     <Box direction="row" align="center">
       <Image height="32" src="/one.svg" margin={{ right: '8px' }} />
       <Title size="small" bold>
-        Multi Shard Bridge
+        Cross Shard Bridge
       </Title>
     </Box>
   );

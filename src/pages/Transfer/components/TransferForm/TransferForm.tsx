@@ -11,12 +11,11 @@ import {
 } from 'components/Form';
 import {
   formatWithEightDecimals,
-  lessThanSat,
+  lessThanWei,
   moreThanZero,
 } from '../../../../utils';
 import { IStores, useStores } from '../../../../stores';
 import { InputMaxAmountControl } from 'components/Form/components/InputMaxAmountControl';
-import { satoshiToBitcoin } from '../../../../services/bitcoin';
 import { InputLabelAvailableBalance } from '../../../../components/Form/components/InputLabelAvailableBalance';
 import utils from 'web3-utils';
 
@@ -40,6 +39,7 @@ export const TransferForm: React.FC<Props> = () => {
 
   return useObserver(() => (
     <Form ref={ref => setForm(ref)} data={transferPageStore.form}>
+      <Box gap="20px">
       <NumberInput
         name="oneAmount"
         type="decimal"
@@ -62,7 +62,7 @@ export const TransferForm: React.FC<Props> = () => {
         rules={[
           isRequired,
           moreThanZero,
-          lessThanSat(userStore.balance, 'transfer amount exceeds balance'),
+          lessThanWei(userStore.balance, 'transfer amount exceeds balance'),
         ]}
       />
 
@@ -75,7 +75,7 @@ export const TransferForm: React.FC<Props> = () => {
         rules={[isRequired]}
       />
 
-      <Box gap="medium">
+
         <Divider colorful fullwidth />
         <Button
           bgColor="#00ADE8"

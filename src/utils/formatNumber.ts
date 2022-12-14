@@ -99,3 +99,11 @@ export const sliceByLength = (str: string, maxLength: number) => {
 
   return str;
 };
+
+export const numberToHex = (value: number): string => {
+  return '0x' + value.toString(16);
+};
+
+export const hexToNumber = (hexString: string): number => {
+  return Number(hexString);
+}

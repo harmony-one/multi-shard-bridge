@@ -1,6 +1,5 @@
 import React from 'react';
 import { CommonLayout } from './CommonLayout';
-import { SidebarMenu } from './SidebarMenu';
 
 interface Props {}
 

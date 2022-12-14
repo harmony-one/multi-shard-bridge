@@ -18,7 +18,7 @@ const App: React.FC = () => (
         <Route exact path={routes.home} component={TransferPage} />
         <Redirect to={routes.home} />
       </Switch>
-      <Disclaimer />
+      {/*<Disclaimer />*/}
       <WatcherBalance />
       <ActionModals />
       <GlobalStyle theme={...baseTheme as any} />

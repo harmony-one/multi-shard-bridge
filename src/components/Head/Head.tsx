@@ -5,10 +5,10 @@ import { observer } from 'mobx-react-lite';
 import { IStyledChildrenProps } from '../../interfaces';
 import { SignInButton } from './components/SignInButton';
 import { HeadBalance } from './components/HeadBalance';
-import { config } from '../../config';
-import { FaucetButtons } from './components/FaucetButtons';
 import { ThemeButton } from '../ThemeButton';
 import { BridgeLogo } from '../BridgeLogo';
+import { Text } from '../Base'
+import { config } from '../../config';
 
 export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
   observer(({ theme }: IStyledChildrenProps<BoxProps>) => {
@@ -32,7 +32,10 @@ export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
       >
 
           <BridgeLogo />
-          <Box direction="row">
+          <Box direction="row" gap="4px">
+            <Box justify="center">
+              <Text>{config.network}</Text>
+            </Box>
             <ThemeButton />
             <HeadBalance />
             {/*{config.isTestnet && <FaucetButtons />}*/}

@@ -10,7 +10,7 @@ export function TransferCompletedModalContent({ total, txHash }) {
     <Box gap="small" align="center">
       <Box align="center">
         <Text>Recipient have received:</Text>
-        <Text bold>{total} 1BTC</Text>
+        <Text bold>{total} ONE</Text>
       </Box>
       <Box align="center">
         <Box>

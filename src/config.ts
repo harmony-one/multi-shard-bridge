@@ -8,21 +8,20 @@ interface Config {
   network: 'mainnet' | 'testnet';
   isTestnet: boolean;
   sentryDSN: string;
-  appType: 'vault' | 'bridge';
-  bitcoin: {
-    waitConfirmationsCount: number;
-    btcNodeUrl: string;
-    explorer: {
-      wallet: string;
-      transaction: string;
-      block: string;
-    };
-  };
   harmony: {
     nodeUrl: string;
-    dashboardUrl: string;
-    oneBtcContract: string;
-    stakingContractAddress: string;
+    shard0: {
+      chainId: number,
+      chainName: string,
+      rpcUrl: string,
+      explorerUrl: string
+    },
+    shard1: {
+      chainId: number,
+      chainName: string,
+      rpcUrl: string,
+      explorerUrl: string
+    },
     explorer: {
       transaction: string;
       address: string;
@@ -30,10 +29,6 @@ interface Config {
   };
   wallets: {
     metamask: boolean;
-    onewallet: boolean;
-  };
-  vaultApp: {
-    vaultHost: string;
   };
   bridge: {
     available: boolean;
@@ -41,39 +36,25 @@ interface Config {
   };
 }
 
-const isVaultApp = !!parseInt(process.env.MODE_VAULT, 0);
-
-const getDashboardUrl = (isVaultApp: boolean) => {
-  if (!isVaultApp) {
-    return process.env.DASHBOARD_URL;
-  }
-
-  return process.env.VAULT_CLIENT_HOST || `${window.origin}/api`;
-};
-
 export const config: Config = {
   version: process.env.APP_VERSION,
   network: process.env.NETWORK as 'mainnet' | 'testnet',
   isTestnet: process.env.NETWORK === 'testnet',
   sentryDSN: process.env.SENTRY_DSN || '',
-  appType: isVaultApp ? 'vault' : 'bridge',
-  bitcoin: {
-    waitConfirmationsCount: parseInt(
-      process.env.BTC_WAIT_CONFIRMATIONS_COUNT || '2',
-      10,
-    ),
-    btcNodeUrl: process.env.BTC_NODE_URL,
-    explorer: {
-      wallet: process.env.BTC_EXPLORER_WALLET,
-      transaction: process.env.BTC_EXPLORER_TX,
-      block: process.env.BTC_EXPLORER_BLOCK,
-    },
-  },
   harmony: {
+    shard0: {
+      chainId: 1666700000,
+      chainName: 'Harmony Shard 0',
+      rpcUrl: 'https://api.s0.b.hmny.io',
+      explorerUrl: 'https://explorer.pops.one/'
+    },
+    shard1: {
+      chainId: 1666700001,
+      chainName: 'Harmony Shard 1',
+      rpcUrl: 'https://api.s1.b.hmny.io',
+      explorerUrl: 'https://explorer.pops.one/',
+    },
     nodeUrl: process.env.HMY_NODE_URL,
-    oneBtcContract: process.env.ONE_BTC_CONTRACT_ADDRESS,
-    stakingContractAddress: process.env.STAKING_CONTRACT_ADDRESS,
-    dashboardUrl: getDashboardUrl(isVaultApp),
     explorer: {
       transaction: process.env.HMY_EXPLORER_TX,
       address: process.env.HMY_EXPLORER_ADDRESS,
@@ -81,10 +62,6 @@ export const config: Config = {
   },
   wallets: {
     metamask: true,
-    onewallet: true,
-  },
-  vaultApp: {
-    vaultHost: process.env.VAULT_CLIENT_HOST || `${window.origin}/api`,
   },
   bridge: {
     available: !!parseInt(process.env.SERVICE_AVAILABLE, 0),

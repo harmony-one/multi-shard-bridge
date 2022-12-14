@@ -51,3 +51,4 @@ export * from './Password';
 export * from './Mail';
 export * from './Phone';
 export * from './ExternalLink';
+export * from './Harmony'

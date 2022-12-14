@@ -1,7 +1,5 @@
 import * as _ from 'lodash';
-import { bitcoinToSatoshi } from '../services/bitcoin';
 import utils from 'web3-utils';
-import * as bitcoin from 'bitcoinjs-lib';
 
 export function createValidate(
   func: (value: any, data?: any) => boolean,
@@ -156,27 +154,6 @@ export const moreThanZero = {
     callback(errors);
   },
   validateType: 'requiredValidator',
-};
-
-export const btcAddressBech32 = createValidate((value: string) => {
-  try {
-    bitcoin.address.fromBech32(value).data.toString('hex');
-    return false;
-  } catch (ex) {
-    return true;
-  }
-}, 'Only Native Segwit (BECH32) supported');
-
-export const lessThanSat = (amount, message) => {
-  return createValidate((value: string) => {
-    return bitcoinToSatoshi(value) > amount;
-  }, message);
-};
-
-export const moreThenSat = (amount, message) => {
-  return createValidate((value: string) => {
-    return bitcoinToSatoshi(value) < amount;
-  }, message);
 };
 
 export const lessThanWei = (amount, message) => {

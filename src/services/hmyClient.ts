@@ -18,5 +18,7 @@ export const getHmyBalance = address => {
 
   const hmyWeb3 = new Web3(web3URL);
 
-  return hmy.blockchain.getBalance({ address });
+
+  // return hmy.blockchain.getBalance({ address });
+  return hmyWeb3.eth.getBalance(address);
 };

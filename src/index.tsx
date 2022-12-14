@@ -17,6 +17,5 @@ Sentry.init({
 });
 
 Sentry.setTag('version', config.version);
-Sentry.setTag('appType', config.appType);
 
 ReactDOM.render(<App />, document.getElementById('root') as HTMLElement);
