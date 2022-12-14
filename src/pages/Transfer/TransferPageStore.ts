@@ -28,7 +28,7 @@ export class TransferPageStore extends StoreConstructor {
   };
 
   @observable
-  transferMode: TRANSFER_MODE = TRANSFER_MODE.SHARD1_TO_SHARD0;
+  transferMode: TRANSFER_MODE = TRANSFER_MODE.SHARD0_TO_SHARD1;
 
   @observable status: 'init' | 'pending' | 'success' | 'cancel' | 'error' =
     'init';
@@ -62,8 +62,13 @@ export class TransferPageStore extends StoreConstructor {
     transferUiTx.setStatusWaitingSignIn();
     transferUiTx.showModal();
 
+    const shardId =  this.transferMode === TRANSFER_MODE.SHARD0_TO_SHARD1 ? 1 : 0;
+
+    console.log('### this.transferMode', this.transferMode);
+    console.log('### shardId', shardId);
+
     try {
-      const result = await hmyCrossShard.transfer(this.form.oneAmount, this.form.oneAddress, 1);
+      const result = await hmyCrossShard.transfer(this.form.oneAmount, this.form.oneAddress, shardId);
 
       // const result = await hmyClient.transfer(
       //   this.form.oneAddress,
@@ -96,16 +101,16 @@ export class TransferPageStore extends StoreConstructor {
       this.status = 'error';
       transferUiTx.setStatusFail();
       transferUiTx.setError(err);
-      console.log('### Error during create issuePageStore', err);
+      console.log('### Error during create transfer', err);
       this.status = 'error';
     }
   }
 
   getRequiredNetwork(): MetaMaskNetworkConfig {
     if (this.transferMode === TRANSFER_MODE.SHARD1_TO_SHARD0) {
-      return getNetworkConfig(NETWORK.HARMONY_SHARD_0);
+      return getNetworkConfig(NETWORK.HARMONY_SHARD_1);
     }
 
-    return getNetworkConfig(NETWORK.HARMONY_SHARD_1);
+    return getNetworkConfig(NETWORK.HARMONY_SHARD_0);
   }
 }

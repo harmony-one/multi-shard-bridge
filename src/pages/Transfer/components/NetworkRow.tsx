@@ -12,7 +12,7 @@ export const NetworkRow: React.FC<Props> = observer(() => {
 
   const {transferPageStore} = useStores();
 
-  const [fromShardName, toShardName] = transferPageStore.transferMode === TRANSFER_MODE.SHARD1_TO_SHARD0 ? ['Shard 0', 'Shard 1'] : ['Shard 1', 'Shard 0'];
+  const [fromShardName, toShardName] = transferPageStore.transferMode === TRANSFER_MODE.SHARD0_TO_SHARD1 ? ['Shard 0', 'Shard 1'] : ['Shard 1', 'Shard 0'];
 
   return (
     <Box direction="row" align="center" fill>

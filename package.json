@@ -6,7 +6,7 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.js",
     "dev:testnet": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config.js --progress --colors --open",
     "dev:mainnet": "cross-env NODE_ENV=mainnet webpack-dev-server --config config/webpack.config.js --progress --colors --open",
-    "build:testnet": "CI=false NODE_ENV=testnet node scripts/build.js --stats",
+    "build:testnet": "CI=false NODE_ENV=development node scripts/build.js --stats",
     "build:mainnet": "CI=false NODE_ENV=mainnet node scripts/build.js --stats",
     "test": "jest --verbose",
     "test:watch": "jest --watch",
