@@ -1,6 +1,8 @@
 import * as React from 'react';
 
-export const NotificationCounterWrap = (props: React.SVGProps<SVGSVGElement>) => (
+export const NotificationCounterWrap = (
+  props: React.SVGProps<SVGSVGElement>,
+) => (
   <svg viewBox="0 0 24 24" {...props}>
     <path
       fill="#FFCB02"

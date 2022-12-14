@@ -27,7 +27,10 @@ export class Collapse extends React.Component<ICollapseProps, ICollapseState> {
     isCollapsed: this.props.isCollapsed,
   };
 
-  UNSAFE_componentWillReceiveProps(nextProps: Readonly<ICollapseProps>, nextContext: any): void {
+  UNSAFE_componentWillReceiveProps(
+    nextProps: Readonly<ICollapseProps>,
+    nextContext: any,
+  ): void {
     if (nextProps.isCollapsed !== this.state.isCollapsed) {
       this.setState({ isCollapsed: nextProps.isCollapsed });
     }

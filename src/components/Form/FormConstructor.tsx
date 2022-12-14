@@ -60,7 +60,9 @@ export class FormConstructor extends MobxForm<IFormConstructorProps<any>> {
     }
 
     if (this.props.onValidSubmit) {
-      this.validateFields().then(this.props.onValidSubmit).catch();
+      this.validateFields()
+        .then(this.props.onValidSubmit)
+        .catch();
     }
   };
 
@@ -83,17 +85,22 @@ export class FormConstructor extends MobxForm<IFormConstructorProps<any>> {
           );
 
         case 'custom':
-          const Custom = createField({ wrapper: Box, component: params.component });
+          const Custom = createField({
+            wrapper: Box,
+            component: params.component,
+          });
 
           return <Custom key={key} {...cmpProps} name={field} />;
 
         default:
-          return cmpProps.visible === false ? null : <FormComponent key={key} {...cmpProps} />;
+          return cmpProps.visible === false ? null : (
+            <FormComponent key={key} {...cmpProps} />
+          );
       }
     });
 
   WrappedComponent: IWrappedComponent<IFormConstructorProps<any>> = (
-    props: IFormConstructorProps<any>
+    props: IFormConstructorProps<any>,
   ) => {
     const { renderElement } = props;
     const renderTagName = renderElement || 'form';
@@ -105,7 +112,7 @@ export class FormConstructor extends MobxForm<IFormConstructorProps<any>> {
     return React.createElement(
       renderTagName,
       { ...props, ...formProps },
-      this.renderFormOptions(this.props.config)
+      this.renderFormOptions(this.props.config),
     );
   };
 }

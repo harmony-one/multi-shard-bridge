@@ -17,7 +17,7 @@ export function getValueFromEvent(e: any): boolean | string {
 }
 
 export function checkIsRequired(
-  rules: Array<IRuleFunc | IRuleObj> | IRuleFunc | IRuleObj
+  rules: Array<IRuleFunc | IRuleObj> | IRuleFunc | IRuleObj,
 ): boolean {
   if (rules) {
     if (_.isArray(rules)) {

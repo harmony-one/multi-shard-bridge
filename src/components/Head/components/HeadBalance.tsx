@@ -1,10 +1,7 @@
 import React from 'react';
 import { Text } from '../../Base';
 import { Box } from 'grommet';
-import {
-  formatWithTwoDecimals,
-  ones,
-} from '../../../utils';
+import { formatWithTwoDecimals, ones } from '../../../utils';
 import { useStores } from '../../../stores';
 import { observer } from 'mobx-react-lite';
 

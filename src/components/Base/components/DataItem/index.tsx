@@ -11,7 +11,12 @@ export type TDataItemProps = BoxProps & {
   fileName?: string;
 };
 
-export const DataItem: React.FC<TDataItemProps> = ({ label, value, bold, ...boxProps }) => {
+export const DataItem: React.FC<TDataItemProps> = ({
+  label,
+  value,
+  bold,
+  ...boxProps
+}) => {
   return (
     <Box flex={{ shrink: 0 }} {...(boxProps as BoxProps)}>
       <Text size="xsmall" color="Black" style={{ paddingBottom: '6px' }}>

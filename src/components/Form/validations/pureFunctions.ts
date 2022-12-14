@@ -1,6 +1,14 @@
-export function createValidate(func: (value: any, data?: any) => boolean, error: any) {
+export function createValidate(
+  func: (value: any, data?: any) => boolean,
+  error: any,
+) {
   return {
-    validator(rule: any[], value: any, callback: (errors: any[]) => void, storeData?: any) {
+    validator(
+      rule: any[],
+      value: any,
+      callback: (errors: any[]) => void,
+      storeData?: any,
+    ) {
       const errors = [];
 
       if (func(value, storeData)) {

@@ -47,6 +47,5 @@ class SwitcherClass extends Component<ISwitcherProps & { theme: any }> {
   }
 }
 
-export const Switcher: React.ComponentType<ICommonInputProps & ISwitcherProps> = withTheme(
-  SwitcherClass
-);
+export const Switcher: React.ComponentType<ICommonInputProps &
+  ISwitcherProps> = withTheme(SwitcherClass);

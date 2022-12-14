@@ -13,12 +13,12 @@ export interface IDefaultForm {
 }
 
 const hmyCrossShard = new HmyCrossShard({
-  walletType: WALLET_TYPE.METAMASK
+  walletType: WALLET_TYPE.METAMASK,
 });
 
 export enum TRANSFER_MODE {
   SHARD0_TO_SHARD1 = 'SHARD0_TO_SHARD1',
-  SHARD1_TO_SHARD0 = 'SHARD1_TO_SHARD0'
+  SHARD1_TO_SHARD0 = 'SHARD1_TO_SHARD0',
 }
 
 export class TransferPageStore extends StoreConstructor {
@@ -62,13 +62,18 @@ export class TransferPageStore extends StoreConstructor {
     transferUiTx.setStatusWaitingSignIn();
     transferUiTx.showModal();
 
-    const shardId =  this.transferMode === TRANSFER_MODE.SHARD0_TO_SHARD1 ? 1 : 0;
+    const shardId =
+      this.transferMode === TRANSFER_MODE.SHARD0_TO_SHARD1 ? 1 : 0;
 
     console.log('### this.transferMode', this.transferMode);
     console.log('### shardId', shardId);
 
     try {
-      const result = await hmyCrossShard.transfer(this.form.oneAmount, this.form.oneAddress, shardId);
+      const result = await hmyCrossShard.transfer(
+        this.form.oneAmount,
+        this.form.oneAddress,
+        shardId,
+      );
 
       // const result = await hmyClient.transfer(
       //   this.form.oneAddress,

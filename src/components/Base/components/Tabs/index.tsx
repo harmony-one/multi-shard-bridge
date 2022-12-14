@@ -12,7 +12,13 @@ export const Tabs: React.FunctionComponent<IProps> = ({
 }) => (
   <Row {...rest}>
     {tabs.map(item => (
-      <Tab key={item.id} onChange={onChange} selected={selected} small={small} {...item} />
+      <Tab
+        key={item.id}
+        onChange={onChange}
+        selected={selected}
+        small={small}
+        {...item}
+      />
     ))}
     {children}
   </Row>
@@ -43,7 +49,9 @@ const StyledTab = styled.div<any>`
   padding: ${props => props.theme.styled.tabs.tab.padding || ''};
   margin: ${props => props.theme.styled.tabs.tab.margin || ''};
   color: ${props =>
-    props.active ? props.theme.styled.tabs.tab.colorActive : props.theme.styled.tabs.tab.color}
+    props.active
+      ? props.theme.styled.tabs.tab.colorActive
+      : props.theme.styled.tabs.tab.color}
   background-color: ${props =>
     props.active
       ? props.theme.styled.tabs.tab.backgroundColorActive

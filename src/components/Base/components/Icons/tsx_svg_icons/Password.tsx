@@ -1,6 +1,8 @@
 import * as React from 'react';
 
-export const Password: React.FC<React.SVGProps<SVGSVGElement>> = ({ ...svgProps }) => (
+export const Password: React.FC<React.SVGProps<SVGSVGElement>> = ({
+  ...svgProps
+}) => (
   <svg
     width="16"
     height="16"

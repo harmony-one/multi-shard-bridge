@@ -22,7 +22,13 @@ export type ITypeRule =
 
 export type IMessageFunc = (message: string, parameters: any) => string;
 
-export type IValidator = (rule: any, value: any, callback: any, source: any, options: any) => void;
+export type IValidator = (
+  rule: any,
+  value: any,
+  callback: any,
+  source: any,
+  options: any,
+) => void;
 
 /**
  * {@link https://www.npmjs.com/package/async-validate#rules Document Rules}
@@ -223,14 +229,22 @@ export class MobxForm<T = {}> extends React.Component<IMobxFormProps & T, any> {
   @autobind
   public getFieldValue(path: string, defaultValue?: any) {
     return toJS(
-      _.get(this.store, this.prefix ? [this.prefix, path].join('.') : path, defaultValue)
+      _.get(
+        this.store,
+        this.prefix ? [this.prefix, path].join('.') : path,
+        defaultValue,
+      ),
     );
   }
 
   @action.bound
   public setField(path: string, value: any) {
     const store = this.store;
-    return _.set(store, this.prefix ? [this.prefix, path].join('.') : path, value);
+    return _.set(
+      store,
+      this.prefix ? [this.prefix, path].join('.') : path,
+      value,
+    );
   }
 
   @action.bound
@@ -256,7 +270,7 @@ export class MobxForm<T = {}> extends React.Component<IMobxFormProps & T, any> {
       validateFieldsOnly.indexOf(fieldName) === -1
     ) {
       allowFieldRules = allowFieldRules.filter(
-        rule => !rule.required && !(rule.validateType === 'requiredValidator')
+        rule => !rule.required && !(rule.validateType === 'requiredValidator'),
       );
     }
 
@@ -270,7 +284,10 @@ export class MobxForm<T = {}> extends React.Component<IMobxFormProps & T, any> {
     const needValidateName: any = [];
     const rules = this.fieldsNames.reduce((o, name) => {
       const fieldRules = toJS(this.fieldOptions.get(name).rules);
-      if ((!_.isArray(fieldRules) && fieldRules) || (_.isArray(fieldRules) && fieldRules.length)) {
+      if (
+        (!_.isArray(fieldRules) && fieldRules) ||
+        (_.isArray(fieldRules) && fieldRules.length)
+      ) {
         const allowRules = this._getAllowRules(name, fieldRules);
 
         if (allowRules && allowRules.length) {
@@ -291,13 +308,16 @@ export class MobxForm<T = {}> extends React.Component<IMobxFormProps & T, any> {
         return o;
       }, {});
 
-      validator.validate(flattenValue, (err: IErrorField[], fields: IErrorFields) => {
-        if (fields) {
-          this.resetErrors();
-          return reject(fields);
-        }
-        return resolve(values);
-      });
+      validator.validate(
+        flattenValue,
+        (err: IErrorField[], fields: IErrorFields) => {
+          if (fields) {
+            this.resetErrors();
+            return reject(fields);
+          }
+          return resolve(values);
+        },
+      );
     }).catch(
       action(errors => {
         const ErrorMap = new Map();
@@ -308,7 +328,7 @@ export class MobxForm<T = {}> extends React.Component<IMobxFormProps & T, any> {
         }
         this.errors = ErrorMap;
         return Promise.reject(errors);
-      })
+      }),
     );
   }
 
@@ -327,7 +347,7 @@ export class MobxForm<T = {}> extends React.Component<IMobxFormProps & T, any> {
         action((err: IErrorField[], fields: IErrorFields) => {
           this.errors.set(name, err || []);
           res();
-        }) as any
+        }) as any,
       );
     });
   }
@@ -384,6 +404,8 @@ export class MobxForm<T = {}> extends React.Component<IMobxFormProps & T, any> {
 
   public render() {
     const WrappedComponent = this.WrappedComponent as any;
-    return <WrappedComponent {...this.props} form={this} ref={this.props.rootRef} />;
+    return (
+      <WrappedComponent {...this.props} form={this} ref={this.props.rootRef} />
+    );
   }
 }

@@ -41,7 +41,13 @@ class TooltipClass extends React.Component<ITooltipProps> {
   };
 
   render() {
-    const { children, text, offset, renderType = 'default', theme = {} } = this.props;
+    const {
+      children,
+      text,
+      offset,
+      renderType = 'default',
+      theme = {},
+    } = this.props;
 
     if (!text) {
       return children;
@@ -49,7 +55,10 @@ class TooltipClass extends React.Component<ITooltipProps> {
 
     if (renderType === 'default') {
       return (
-        <RCTooltip overlay={<Overlay theme={theme}>{text}</Overlay>} placement="top">
+        <RCTooltip
+          overlay={<Overlay theme={theme}>{text}</Overlay>}
+          placement="top"
+        >
           {children}
         </RCTooltip>
       );
@@ -96,10 +105,11 @@ const Overlay = styled.div<any>`
   border-radius: 4px;
   padding: 10px;
 
-  z-index 999;
+  z-index: 999;
   max-width: 240px;
-  
-  font-family: ${props => props.theme.fontBase || '"Roboto-Medium", sans-serif'};
+
+  font-family: ${props =>
+    props.theme.fontBase || '"Roboto-Medium", sans-serif'};
   font-size: 15px;
 `;
 
@@ -111,5 +121,7 @@ export interface ITooltipProps {
   renderType?: 'default' | 'portal';
 }
 
-export const Tooltip: React.ComponentType<ITooltipProps> = withTheme(TooltipClass);
+export const Tooltip: React.ComponentType<ITooltipProps> = withTheme(
+  TooltipClass,
+);
 Tooltip.displayName = 'Tooltip';

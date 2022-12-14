@@ -34,17 +34,19 @@ export const HarmonyShard1: MetaMaskNetworkConfig = {
 const networkMapConfig = {
   [NETWORK.HARMONY_SHARD_0]: HarmonyShard0,
   [NETWORK.HARMONY_SHARD_1]: HarmonyShard1,
-}
+};
 
 export const chainIdToNetwork = {
   [HarmonyShard0.chainId]: HarmonyShard0,
   [HarmonyShard1.chainId]: HarmonyShard1,
-}
+};
 
 export const getNetworkConfig = (networkType: NETWORK) => {
-  return networkMapConfig[networkType]
-}
+  return networkMapConfig[networkType];
+};
 
-export const getNetworkConfigByChainId = (chainId: number | string): MetaMaskNetworkConfig | null => {
+export const getNetworkConfigByChainId = (
+  chainId: number | string,
+): MetaMaskNetworkConfig | null => {
   return chainIdToNetwork[numberToHex(Number(chainId))];
-}
+};

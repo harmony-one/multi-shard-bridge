@@ -14,7 +14,8 @@ const StyledRadioWrap = styled.div<any>`
   flex-direction: column;
 
   * {
-    font-family: ${props => props.theme.fontBase || 'Roboto-Medium", sans-serif'};
+    font-family: ${props =>
+      props.theme.fontBase || 'Roboto-Medium", sans-serif'};
   }
 `;
 
@@ -82,7 +83,11 @@ const RadioButton = (props: IRadioOptionProps) => {
     <Label style={styles} size={size}>
       <div style={{ flex: '0 0 auto' }}>
         {checked ? (
-          <Icon glyph="RadioButton" nativeClick color={disabled ? disabledColor : colorPrimary} />
+          <Icon
+            glyph="RadioButton"
+            nativeClick
+            color={disabled ? disabledColor : colorPrimary}
+          />
         ) : (
           <Icon
             glyph="RadioButtonEmpty"
@@ -107,7 +112,9 @@ const RadioButton = (props: IRadioOptionProps) => {
   );
 };
 
-const RadioGroupClass = (props: ICommonInputProps & IRadioGroupProps & { theme: object }) => {
+const RadioGroupClass = (
+  props: ICommonInputProps & IRadioGroupProps & { theme: object },
+) => {
   const {
     options = [],
     theme,
@@ -127,7 +134,13 @@ const RadioGroupClass = (props: ICommonInputProps & IRadioGroupProps & { theme: 
           <b>{label}</b>
         </p>
       )}
-      <div style={{ display: 'flex', flexDirection: direction as any, flexWrap: 'wrap' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: direction as any,
+          flexWrap: 'wrap',
+        }}
+      >
         {options.map(option => (
           <RadioButton
             key={option.value}
@@ -145,6 +158,5 @@ const RadioGroupClass = (props: ICommonInputProps & IRadioGroupProps & { theme: 
   );
 };
 
-export const RadioGroup: React.ComponentType<ICommonInputProps & IRadioGroupProps> = withTheme(
-  RadioGroupClass
-);
+export const RadioGroup: React.ComponentType<ICommonInputProps &
+  IRadioGroupProps> = withTheme(RadioGroupClass);

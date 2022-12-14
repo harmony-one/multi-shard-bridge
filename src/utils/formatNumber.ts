@@ -106,4 +106,4 @@ export const numberToHex = (value: number): string => {
 
 export const hexToNumber = (hexString: string): number => {
   return Number(hexString);
-}
+};

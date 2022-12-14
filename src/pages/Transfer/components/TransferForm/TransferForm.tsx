@@ -40,41 +40,40 @@ export const TransferForm: React.FC<Props> = () => {
   return useObserver(() => (
     <Form ref={ref => setForm(ref)} data={transferPageStore.form}>
       <Box gap="20px">
-      <NumberInput
-        name="oneAmount"
-        type="decimal"
-        precision="8"
-        delimiter="."
-        placeholder="0.0"
-        inputLabel={
-          <InputLabelAvailableBalance
-            label="Amount"
-            balance={formatWithEightDecimals(
-              utils.fromWei(userStore.balance).toString(),
-            )}
-            tokenName="ONE"
-          />
-        }
-        renderRight={
-          <InputMaxAmountControl onClick={handleMaxClick} tokenName="ONE" />
-        }
-        style={{ width: '100%' }}
-        rules={[
-          isRequired,
-          moreThanZero,
-          lessThanWei(userStore.balance, 'transfer amount exceeds balance'),
-        ]}
-      />
+        <NumberInput
+          name="oneAmount"
+          type="decimal"
+          precision="8"
+          delimiter="."
+          placeholder="0.0"
+          inputLabel={
+            <InputLabelAvailableBalance
+              label="Amount"
+              balance={formatWithEightDecimals(
+                utils.fromWei(userStore.balance).toString(),
+              )}
+              tokenName="ONE"
+            />
+          }
+          renderRight={
+            <InputMaxAmountControl onClick={handleMaxClick} tokenName="ONE" />
+          }
+          style={{ width: '100%' }}
+          rules={[
+            isRequired,
+            moreThanZero,
+            lessThanWei(userStore.balance, 'transfer amount exceeds balance'),
+          ]}
+        />
 
-      <Input
-        label="Recipient"
-        name="oneAddress"
-        type="string"
-        placeholder="Enter recipient address"
-        style={{ width: '100%' }}
-        rules={[isRequired]}
-      />
-
+        <Input
+          label="Recipient"
+          name="oneAddress"
+          type="string"
+          placeholder="Enter recipient address"
+          style={{ width: '100%' }}
+          rules={[isRequired]}
+        />
 
         <Divider colorful fullwidth />
         <Button

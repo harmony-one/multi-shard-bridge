@@ -3,7 +3,10 @@ import { MarginType, PadType } from 'grommet/utils';
 export type TSpacingType = 'margin' | 'padding';
 export type TEdgeSize = MarginType | PadType;
 
-const getEdgeSizeCSS = (spaceType: TSpacingType) => (edge: TEdgeSize, theme: any) => {
+const getEdgeSizeCSS = (spaceType: TSpacingType) => (
+  edge: TEdgeSize,
+  theme: any,
+) => {
   const getSizeCSS = (size: string) => theme.global.edgeSize[size] || size;
 
   if (typeof edge === 'string') {

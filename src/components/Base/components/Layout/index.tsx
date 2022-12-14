@@ -1,7 +1,13 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-type TFLex = 'flex-start' | 'center' | 'stretch' | 'flex-end' | 'space-between' | 'space-around';
+type TFLex =
+  | 'flex-start'
+  | 'center'
+  | 'stretch'
+  | 'flex-end'
+  | 'space-between'
+  | 'space-around';
 
 interface ILayout {
   direction?: 'row' | 'column';

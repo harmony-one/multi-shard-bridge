@@ -15,7 +15,7 @@ export const SignInButton: React.FC = observer(() => {
   //   user.signOut();
   // }, [user]);
 
-  return null
+  return null;
 
   return (
     <Box>

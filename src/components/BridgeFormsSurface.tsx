@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Box } from 'grommet';
-import { prop } from 'bitcoinjs-lib/types/payments/lazy';
 import { BoxExtendedProps } from 'grommet/components/Box';
 
 const StyledBox = styled(Box)`
@@ -11,7 +10,10 @@ const StyledBox = styled(Box)`
   border: ${props => props.theme.surface.border};
 `;
 
-export const BridgeFormsSurface: React.FC<BoxExtendedProps> = ({ children, ...props }) => {
+export const BridgeFormsSurface: React.FC<BoxExtendedProps> = ({
+  children,
+  ...props
+}) => {
   return (
     <StyledBox
       direction="column"

@@ -28,7 +28,8 @@ const Label = styled.label<any>`
   font-family: ${props => props.theme.fontBase || 'Roboto-Medium", sans-serif'};
 
   * {
-    font-family: ${props => props.theme.fontBase || 'Roboto-Medium", sans-serif'};
+    font-family: ${props =>
+      props.theme.fontBase || 'Roboto-Medium", sans-serif'};
   }
 `;
 
@@ -49,7 +50,14 @@ const CheckboxClass = (props: ICheckboxProps) => {
 
   return (
     <Label style={style} theme={theme} size={size}>
-      <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'center', marginRight: 5 }}>
+      <div
+        style={{
+          flex: '0 0 auto',
+          display: 'flex',
+          alignItems: 'center',
+          marginRight: 5,
+        }}
+      >
         {value ? (
           <Icon
             glyph="CheckBox"
@@ -76,4 +84,6 @@ const CheckboxClass = (props: ICheckboxProps) => {
   );
 };
 
-export const Checkbox: React.ComponentType<ICheckboxProps> = withTheme(CheckboxClass);
+export const Checkbox: React.ComponentType<ICheckboxProps> = withTheme(
+  CheckboxClass,
+);

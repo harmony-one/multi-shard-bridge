@@ -12,8 +12,7 @@ import { useCallback } from 'react';
 import { WalletNetworkWarn } from './components/WalletNetworkWarn';
 
 export const TransferPage = observer(() => {
-
-  const {userStore} = useStores();
+  const { userStore } = useStores();
 
   const handleClickMetamask = useCallback(() => {
     if (userStore.isAuthorized) {
@@ -38,8 +37,8 @@ export const TransferPage = observer(() => {
               //   pad={{ horizontal: '30px', vertical: '20px' }}
               // >
               <WalletNetworkWarn />
-              // </Box>
-            ) : null}
+            ) : // </Box>
+            null}
 
             {!userStore.isAuthorized ? (
               <Box

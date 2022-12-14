@@ -13,11 +13,7 @@ export const NetworkHarmony: React.FC<Props> = ({ title, shardName }) => {
     <BridgeControl
       title={title}
       centerContent={<NetworkIcon />}
-      bottomContent={
-        <Text size="small">
-          {shardName}
-        </Text>
-      }
+      bottomContent={<Text size="small">{shardName}</Text>}
     />
   );
 };

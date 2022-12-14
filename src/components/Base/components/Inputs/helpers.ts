@@ -13,7 +13,7 @@ export function normalizeNumber(value: string | number) {
       (strValue.match(/\./g) || []).length === 1 ||
       value === ''
       ? value
-      : Number(value)
+      : Number(value),
   );
 }
 

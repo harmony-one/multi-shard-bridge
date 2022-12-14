@@ -1,6 +1,8 @@
 import * as React from 'react';
 
-export const Mail: React.FC<React.SVGProps<SVGSVGElement>> = ({ ...svgProps }) => (
+export const Mail: React.FC<React.SVGProps<SVGSVGElement>> = ({
+  ...svgProps
+}) => (
   <svg
     width="12"
     height="9"

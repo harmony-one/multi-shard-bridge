@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import { Box } from 'grommet/components/Box';
 import { Text } from '../../../components/Base';
@@ -16,17 +16,17 @@ export const WalletNetworkWarn: React.FC<Props> = observer(() => {
   if (!currentNetwork) {
     // @ts-ignore
     currentNetwork = {
-      chainName: 'Unknown'
+      chainName: 'Unknown',
     };
     // return null;
   }
 
-  if(currentNetwork === requiredNetwork) {
+  if (currentNetwork === requiredNetwork) {
     return null;
   }
 
-  if(!currentNetwork || !requiredNetwork)  {
-    return null
+  if (!currentNetwork || !requiredNetwork) {
+    return null;
   }
 
   return (
@@ -37,9 +37,10 @@ export const WalletNetworkWarn: React.FC<Props> = observer(() => {
         <span style={{ color: 'rgb(0, 173, 232)' }}>
           {currentNetwork.chainName}
         </span>
-        . Please change network to {requiredNetwork.chainName} for transfer&nbsp;
-        {requiredNetwork.chainName}&nbsp;-{'>'}&nbsp;{currentNetwork.chainName} with
-        MetaMask.
+        . Please change network to {requiredNetwork.chainName} for
+        transfer&nbsp;
+        {requiredNetwork.chainName}&nbsp;-{'>'}&nbsp;{currentNetwork.chainName}{' '}
+        with MetaMask.
       </Text>
       <SwitchNetworkButton />
     </Box>

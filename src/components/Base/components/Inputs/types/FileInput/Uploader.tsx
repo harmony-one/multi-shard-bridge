@@ -2,12 +2,17 @@ import { Icon, Text, Title } from 'components/Base';
 import * as React from 'react';
 import styled from 'styled-components';
 
-interface IFileUploaderProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface IFileUploaderProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   amount: number;
   onClearClick(): void;
 }
 
-export const FileUploader = ({ amount, onClearClick, ...rest }: IFileUploaderProps) => (
+export const FileUploader = ({
+  amount,
+  onClearClick,
+  ...rest
+}: IFileUploaderProps) => (
   <FileWrap>
     {amount === 0 && (
       <div
@@ -19,7 +24,11 @@ export const FileUploader = ({ amount, onClearClick, ...rest }: IFileUploaderPro
           alignItems: 'center',
         }}
       >
-        <Icon glyph="PrintFormDownload" color="Basic500" margin={{ bottom: 'xsmall' }} />
+        <Icon
+          glyph="PrintFormDownload"
+          color="Basic500"
+          margin={{ bottom: 'xsmall' }}
+        />
         <Title bold size="xxsmall" color="Basic500">
           Загрузите или переместите файл
         </Title>
@@ -46,7 +55,12 @@ export const FileUploader = ({ amount, onClearClick, ...rest }: IFileUploaderPro
             alignItems: 'center',
           }}
         >
-          <Icon glyph="Close" color="Basic500" size="16px" onClick={onClearClick} />
+          <Icon
+            glyph="Close"
+            color="Basic500"
+            size="16px"
+            onClick={onClearClick}
+          />
         </div>
       </div>
     )}

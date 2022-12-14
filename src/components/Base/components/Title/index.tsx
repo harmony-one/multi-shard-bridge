@@ -3,9 +3,14 @@ import styled from 'styled-components';
 
 import { get } from 'lodash';
 import { TEdgeSize, getMarginCSS, getPaddingCSS } from '../../utils';
-import { prop } from 'bitcoinjs-lib/types/payments/lazy';
 
-type TTitleSize = 'xxsmall' | 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+type TTitleSize =
+  | 'xxsmall'
+  | 'xsmall'
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'xlarge';
 
 const sizes = {
   xxsmall: '16px',
@@ -47,7 +52,10 @@ const TitleWrap = styled.div<ITitleProps>`
   font-weight: ${props => (props.bold ? '700' : '500')};
   text-align: ${props => (props.align ? props.align : 'left')};
   color: ${props =>
-    props.theme.palette[props.color] || props.color || props.theme.titleColor || 'black'};
+    props.theme.palette[props.color] ||
+    props.color ||
+    props.theme.titleColor ||
+    'black'};
 
   ${props => props.pad && getPaddingCSS(props.pad, props.theme)}
   ${props => props.margin && getMarginCSS(props.margin, props.theme)}

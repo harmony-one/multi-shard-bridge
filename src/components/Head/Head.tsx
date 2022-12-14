@@ -7,7 +7,7 @@ import { SignInButton } from './components/SignInButton';
 import { HeadBalance } from './components/HeadBalance';
 import { ThemeButton } from '../ThemeButton';
 import { BridgeLogo } from '../BridgeLogo';
-import { Text } from '../Base'
+import { Text } from '../Base';
 import { config } from '../../config';
 
 export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
@@ -30,17 +30,16 @@ export const Head: React.FC<IStyledChildrenProps<BoxProps>> = withTheme(
           width: '100%',
         }}
       >
-
-          <BridgeLogo />
-          <Box direction="row" gap="4px">
-            <Box justify="center">
-              <Text>{config.network}</Text>
-            </Box>
-            <ThemeButton />
-            <HeadBalance />
-            {/*{config.isTestnet && <FaucetButtons />}*/}
-            <SignInButton />
+        <BridgeLogo />
+        <Box direction="row" gap="4px">
+          <Box justify="center">
+            <Text>{config.network}</Text>
           </Box>
+          <ThemeButton />
+          <HeadBalance />
+          {/*{config.isTestnet && <FaucetButtons />}*/}
+          <SignInButton />
+        </Box>
       </Box>
     );
   }),

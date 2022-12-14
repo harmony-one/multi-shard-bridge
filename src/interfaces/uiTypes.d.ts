@@ -12,5 +12,5 @@ export declare type TTextSize =
   | 'medium'
   | 'large'
   | 'xlarge';
-  
+
 export type IStyledChildrenProps<P> = PropsWithChildren<P> & IStyledProps;

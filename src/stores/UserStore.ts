@@ -7,7 +7,11 @@ import { StoreConstructor } from './core/StoreConstructor';
 import { ConnectWalletModal } from '../components/Head/components/ConnectWalletModal';
 import { config } from '../config';
 import { addressIsEq } from '../utils/hmy';
-import { getNetworkConfig, getNetworkConfigByChainId, NETWORK } from '../constants/network';
+import {
+  getNetworkConfig,
+  getNetworkConfigByChainId,
+  NETWORK,
+} from '../constants/network';
 import { MetaMaskNetworkConfig } from '../interfaces/metamask';
 
 const Web3 = require('web3');
@@ -213,10 +217,8 @@ export class UserStoreEx extends StoreConstructor {
 
   @action public getBalances = async () => {
     if (this.address && (!this.isMetamask || this.isNetworkActual)) {
-
       try {
-        const res = await getHmyBalance(this.address);
-        this.balance = res;
+        this.balance = await getHmyBalance(this.address);
       } catch (e) {
         console.error(e);
       }

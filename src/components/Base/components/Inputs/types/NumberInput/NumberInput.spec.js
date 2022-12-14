@@ -73,10 +73,14 @@ describe('Number Input', () => {
         type: 'integer',
         min: 0,
       };
-      const forbiddenUserValues = stringArray((_, index) => props.min - 1 - index);
+      const forbiddenUserValues = stringArray(
+        (_, index) => props.min - 1 - index,
+      );
       const { input } = setup(props);
 
-      forbiddenUserValues.forEach(value => fireEvent.change(input, { target: { value } }));
+      forbiddenUserValues.forEach(value =>
+        fireEvent.change(input, { target: { value } }),
+      );
 
       expect(input.value).toBe(props.defaultValue);
     });
@@ -86,10 +90,14 @@ describe('Number Input', () => {
         type: 'integer',
         min: 0,
       };
-      const acceptedUserValues = stringArray((_, index) => props.min + 1 + index);
+      const acceptedUserValues = stringArray(
+        (_, index) => props.min + 1 + index,
+      );
       const { input } = setup(props);
 
-      acceptedUserValues.forEach(value => fireEvent.change(input, { target: { value } }));
+      acceptedUserValues.forEach(value =>
+        fireEvent.change(input, { target: { value } }),
+      );
 
       expect(input.value).toBe(last(acceptedUserValues));
     });
@@ -101,10 +109,14 @@ describe('Number Input', () => {
         max: 0,
       };
 
-      const forbiddenUserValues = stringArray((_, index) => props.max + 1 + index);
+      const forbiddenUserValues = stringArray(
+        (_, index) => props.max + 1 + index,
+      );
       const { input } = setup(props);
 
-      forbiddenUserValues.forEach(value => fireEvent.change(input, { target: { value } }));
+      forbiddenUserValues.forEach(value =>
+        fireEvent.change(input, { target: { value } }),
+      );
       expect(input.value).toBe(props.defaultValue);
     });
 
@@ -115,10 +127,14 @@ describe('Number Input', () => {
         max: 0,
       };
 
-      const acceptedUserValues = stringArray((_, index) => props.max - 1 - index);
+      const acceptedUserValues = stringArray(
+        (_, index) => props.max - 1 - index,
+      );
       const { input } = setup(props);
 
-      acceptedUserValues.forEach(value => fireEvent.change(input, { target: { value } }));
+      acceptedUserValues.forEach(value =>
+        fireEvent.change(input, { target: { value } }),
+      );
       expect(input.value).toBe(last(acceptedUserValues));
     });
   });

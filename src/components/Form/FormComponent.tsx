@@ -16,7 +16,9 @@ export type TFormFieldBase<T = any, F extends keyof T | string = any> = {
     genOptions?(props?: any): any[];
   };
 
-export class FormComponent<T, F extends keyof T> extends React.Component<TFormFieldBase<T, F>> {
+export class FormComponent<T, F extends keyof T> extends React.Component<
+  TFormFieldBase<T, F>
+> {
   render() {
     const { isShow = true } = this.props;
 

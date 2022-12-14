@@ -42,7 +42,9 @@ export interface ITextAreaProps extends ICommonInputProps {
   style?: React.CSSProperties;
 }
 
-class TextAreaClass extends React.Component<ICommonInputProps & ITextAreaProps> {
+class TextAreaClass extends React.Component<
+  ICommonInputProps & ITextAreaProps
+> {
   onChange = event => {
     const { value } = event.target;
     const { mask, onChange } = this.props;
@@ -61,7 +63,14 @@ class TextAreaClass extends React.Component<ICommonInputProps & ITextAreaProps> 
   };
 
   render() {
-    const { renderLeft, renderRight, children, onChange, style, ...rest } = this.props;
+    const {
+      renderLeft,
+      renderRight,
+      children,
+      onChange,
+      style,
+      ...rest
+    } = this.props;
 
     return <Area {...rest} style={style} onChange={this.onChange} />;
   }
@@ -69,5 +78,5 @@ class TextAreaClass extends React.Component<ICommonInputProps & ITextAreaProps> 
 
 export const TextArea: React.ComponentType<ITextAreaProps> = withTheme(
   // @ts-ignore
-  TextAreaClass
+  TextAreaClass,
 );

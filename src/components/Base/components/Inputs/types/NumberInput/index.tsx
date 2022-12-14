@@ -17,45 +17,54 @@ const types: Record<
   integer: {
     mask: props => (props.min >= 0 ? `^[0-9]+$` : `(^[-]{1}$|[-]?[0-9]+$)`),
     getValue: props =>
-      pipe(value => limitNumber(value, props.min, props.max), limitLength, normalizeNumber),
+      pipe(
+        value => limitNumber(value, props.min, props.max),
+        limitLength,
+        normalizeNumber,
+      ),
     onChange: props =>
-      pipe(normalizeNumber, limitLength, value => limitNumber(value, props.min, props.max)),
+      pipe(normalizeNumber, limitLength, value =>
+        limitNumber(value, props.min, props.max),
+      ),
   },
   decimal: {
     mask: props =>
       props.min >= 0
-        ? `^[0-9]+(\\${props.delimiter || ','}[0-9]{0,${props.precision || 2}})?$`
-        : `(^[-]{1}$|^[-]?[0-9]+(\\${props.delimiter || ','}[0-9]{0,${props.precision || 2}})?$)`,
+        ? `^[0-9]+(\\${props.delimiter || ','}[0-9]{0,${props.precision ||
+            2}})?$`
+        : `(^[-]{1}$|^[-]?[0-9]+(\\${props.delimiter ||
+            ','}[0-9]{0,${props.precision || 2}})?$)`,
     getValue: props =>
       pipe(
         value => limitNumber(value, props.min, props.max),
         limitLength,
         normalizeNumber,
-        value => String(value).replace('.', props.delimiter || ',')
+        value => String(value).replace('.', props.delimiter || ','),
       ),
     onChange: props =>
       pipe(
         value => String(value).replace(props.delimiter || ',', '.'),
         normalizeNumber,
         limitLength,
-        value => limitNumber(value, props.min, props.max)
+        value => limitNumber(value, props.min, props.max),
       ),
   },
   currency: {
-    mask: props => `^[0-9]+(\\${props.delimiter || ','}[0-9]{0,${props.precision || 2}})?$`,
+    mask: props =>
+      `^[0-9]+(\\${props.delimiter || ','}[0-9]{0,${props.precision || 2}})?$`,
     getValue: props =>
       pipe(
         value => limitNumber(value, 0, props.max),
         limitLength,
         normalizeNumber,
-        value => String(value).replace('.', props.delimiter || ',')
+        value => String(value).replace('.', props.delimiter || ','),
       ),
     onChange: props =>
       pipe(
         value => String(value).replace(props.delimiter || ',', '.'),
         normalizeNumber,
         limitLength,
-        value => limitNumber(value, 0, props.max)
+        value => limitNumber(value, 0, props.max),
       ),
   },
 };
@@ -68,7 +77,10 @@ export interface INumberInputProps extends ITextInputProps {
   delimiter?: string;
 }
 
-export const NumberInput: React.FC<INumberInputProps> = ({ type = 'integer', ...props } = {}) => {
+export const NumberInput: React.FC<INumberInputProps> = ({
+  type = 'integer',
+  ...props
+} = {}) => {
   const { mask, getValue, onChange: onChangeNormalize } = types[type];
 
   const onChangeHandler = valueArg => onChangeNormalize(props)(valueArg);

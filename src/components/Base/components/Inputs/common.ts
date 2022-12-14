@@ -11,10 +11,25 @@ export const sizes = {
   auto: 'auto',
 };
 
-export type TSize = 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge' | 'full' | 'auto';
+export type TSize =
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'xlarge'
+  | 'xxlarge'
+  | 'full'
+  | 'auto';
 
-export function getSize(size: TSize, theme: any, _defaultSize: TSize = 'medium') {
-  const defaultSize = get(theme, 'sizes.defaults.linear', _defaultSize || 'medium');
+export function getSize(
+  size: TSize,
+  theme: any,
+  _defaultSize: TSize = 'medium',
+) {
+  const defaultSize = get(
+    theme,
+    'sizes.defaults.linear',
+    _defaultSize || 'medium',
+  );
   const themeSize = get(theme, `sizes.linear.${size || defaultSize}`, '');
 
   return themeSize || sizes[size || defaultSize];

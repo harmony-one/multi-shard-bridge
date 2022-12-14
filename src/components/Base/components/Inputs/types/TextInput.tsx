@@ -21,7 +21,10 @@ const Input = styled.input`
 type TPlacement = 'Top' | 'Right' | 'Bottom' | 'Left';
 type TBRadiusPlacement = 'TopLeft' | 'TopRight' | 'BottomLeft' | 'BottomRight';
 
-export function getInputBorder(props: IInputWrapProps & { theme: any }, placement: TPlacement) {
+export function getInputBorder(
+  props: IInputWrapProps & { theme: any },
+  placement: TPlacement,
+) {
   const { theme } = props;
   const { input } = theme.styled;
 
@@ -36,7 +39,7 @@ export function getInputBorder(props: IInputWrapProps & { theme: any }, placemen
 
 export function getInputBorderRadius(
   props: IInputWrapProps & { theme: any },
-  placement: TBRadiusPlacement
+  placement: TBRadiusPlacement,
 ) {
   const { theme } = props;
   const { input = {} } = get(theme, 'styled', {});
@@ -73,16 +76,22 @@ interface IInputWrapProps {
 const InputWrap = styled.div<IInputWrapProps>`
   display: flex;
   background-color: ${props =>
-    getColor(props.bgColor || props.theme.styled.input.bgColor, props.theme.palette)};
-  color: ${props => getColor(props.theme.styled.input.textColor, props.theme.palette)};
+    getColor(
+      props.bgColor || props.theme.styled.input.bgColor,
+      props.theme.palette,
+    )};
+  color: ${props =>
+    getColor(props.theme.styled.input.textColor, props.theme.palette)};
   border-top: ${props => getInputBorder(props, 'Top')};
   border-right: ${props => getInputBorder(props, 'Right')};
   border-bottom: ${props => getInputBorder(props, 'Bottom')};
   border-left: ${props => getInputBorder(props, 'Left')};
   border-top-left-radius: ${props => getInputBorderRadius(props, 'TopLeft')};
   border-top-right-radius: ${props => getInputBorderRadius(props, 'TopRight')};
-  border-bottom-left-radius: ${props => getInputBorderRadius(props, 'BottomLeft')};
-  border-bottom-right-radius: ${props => getInputBorderRadius(props, 'BottomRight')};
+  border-bottom-left-radius: ${props =>
+    getInputBorderRadius(props, 'BottomLeft')};
+  border-bottom-right-radius: ${props =>
+    getInputBorderRadius(props, 'BottomRight')};
   padding: 14px;
   margin: ${props => (props.margin ? props.margin : '')};
   font-size: 16px;
@@ -113,7 +122,15 @@ export const TextInputComponent = React.forwardRef<
   HTMLInputElement,
   ITextInputProps & Partial<IInputWrapProps> & { theme?: {} }
 >((props, ref) => {
-  const { renderLeft, renderRight, children, onChange, style, mask, ...rest } = props;
+  const {
+    renderLeft,
+    renderRight,
+    children,
+    onChange,
+    style,
+    mask,
+    ...rest
+  } = props;
   const { wrapperProps, inputProps } = divideProps(rest);
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -154,7 +171,9 @@ export const TextInputComponent = React.forwardRef<
 export const TextInput = withTheme(TextInputComponent);
 TextInput.displayName = 'TextInput';
 
-const divideProps = (props: ITextInputProps & Partial<IInputWrapProps> & { theme?: {} }) => {
+const divideProps = (
+  props: ITextInputProps & Partial<IInputWrapProps> & { theme?: {} },
+) => {
   const {
     mask,
     size,
