@@ -45,7 +45,7 @@ export const LinkHarmony: React.FC<Props> = ({
 
   return (
     <Box direction="row" align="center" gap="xxsmall">
-      <img src="/one.svg" className={s.icon} alt="bitcoin" />
+      <img src="/one.svg" className={s.icon} alt="harmony logo" />
       <a
         className={cn(s.link, {
           [s.mono]: mono,

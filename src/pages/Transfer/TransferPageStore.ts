@@ -118,4 +118,12 @@ export class TransferPageStore extends StoreConstructor {
 
     return getNetworkConfig(NETWORK.HARMONY_SHARD_0);
   }
+
+  getDestinationNetwork(): MetaMaskNetworkConfig {
+    if (this.transferMode === TRANSFER_MODE.SHARD1_TO_SHARD0) {
+      return getNetworkConfig(NETWORK.HARMONY_SHARD_0);
+    }
+
+    return getNetworkConfig(NETWORK.HARMONY_SHARD_1);
+  }
 }
