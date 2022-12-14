@@ -18,6 +18,7 @@ import { IStores, useStores } from '../../../../stores';
 import { InputMaxAmountControl } from 'components/Form/components/InputMaxAmountControl';
 import { InputLabelAvailableBalance } from '../../../../components/Form/components/InputLabelAvailableBalance';
 import utils from 'web3-utils';
+import { InputLabelUseAddress } from '../../../../components/Form/components/InputLabelUseAddress';
 
 type Props = Pick<IStores, 'transferPageStore'>;
 
@@ -36,6 +37,10 @@ export const TransferForm: React.FC<Props> = () => {
       transferPageStore.createTransfer();
     });
   }, [form, transferPageStore]);
+
+  const handleUseAddress = useCallback(() => {
+    transferPageStore.form.oneAddress = userStore.address;
+  }, [userStore.address]);
 
   return useObserver(() => (
     <Form ref={ref => setForm(ref)} data={transferPageStore.form}>
@@ -67,12 +72,17 @@ export const TransferForm: React.FC<Props> = () => {
         />
 
         <Input
-          label="Recipient"
           name="oneAddress"
           type="string"
           placeholder="Enter recipient address"
           style={{ width: '100%' }}
           rules={[isRequired]}
+          inputLabel={
+            <InputLabelUseAddress
+              onClick={handleUseAddress}
+              label="Recipient"
+            />
+          }
         />
 
         <Divider colorful fullwidth />
