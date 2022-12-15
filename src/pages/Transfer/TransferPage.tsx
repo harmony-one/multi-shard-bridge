@@ -44,7 +44,8 @@ export const TransferPage = observer(() => {
               <Box
                 direction="column"
                 justify="center"
-                pad={{ horizontal: '80px', vertical: '20px' }}
+                fill
+                pad={{ horizontal: '80px' }}
               >
                 <MetamaskButton active={true} onClick={handleClickMetamask} />
               </Box>

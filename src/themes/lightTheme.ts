@@ -24,7 +24,7 @@ const palette: IPalette = {
   StandardGray: '#1B1B1C',
 
   Link: '#1F5AE2',
-  TextColor: '#E7ECF7',
+  TextColor: '#212D5E',
   BorderColor: '#E7ECF7',
   SurfaceColor: '#1b1b1c',
 

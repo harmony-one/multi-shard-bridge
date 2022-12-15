@@ -24,9 +24,11 @@ export const MetamaskButton: React.FC<MetamaskButtonProps> = ({
   return (
     <StyledButton active={active} onClick={onClick}>
       <Box direction="row" gap="12px" align="center" justify="center">
-        <Text bold>Connect MetaMask</Text>
+        <Text color="Basic100" bold>
+          Connect MetaMask
+        </Text>
         <Box>
-          <img src="/metamask.svg" height="24" />
+          <img src="/metamask.svg" height="24" alt="metamask logo" />
         </Box>
         {/*<Text color="NWhite" size="xxsmall" lh="24px">*/}
         {/*  {label}*/}
