@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { Box } from 'grommet';
 import { Divider, Button } from 'components/Base';
-import { useObserver } from 'mobx-react';
+import { observer, useObserver } from 'mobx-react';
 import {
   Form,
   isRequired,
@@ -22,7 +22,7 @@ import { InputLabelUseAddress } from '../../../../components/Form/components/Inp
 
 type Props = Pick<IStores, 'transferPageStore'>;
 
-export const TransferForm: React.FC<Props> = () => {
+export const TransferForm: React.FC<Props> = observer(() => {
   const { transferPageStore, userStore } = useStores();
   const [form, setForm] = useState<MobxForm>();
 
@@ -41,6 +41,10 @@ export const TransferForm: React.FC<Props> = () => {
   const handleUseAddress = useCallback(() => {
     transferPageStore.form.oneAddress = userStore.address;
   }, [userStore.address]);
+
+  const disabled =
+    !transferPageStore.isNetworkValid() ||
+    transferPageStore.status === 'pending';
 
   return useObserver(() => (
     <Form ref={ref => setForm(ref)} data={transferPageStore.form}>
@@ -78,10 +82,7 @@ export const TransferForm: React.FC<Props> = () => {
           style={{ width: '100%' }}
           rules={[isRequired]}
           inputLabel={
-            <InputLabelUseAddress
-              onClick={handleUseAddress}
-              label="Recipient"
-            />
+            <InputLabelUseAddress onClick={handleUseAddress} label="Address" />
           }
         />
 
@@ -90,7 +91,7 @@ export const TransferForm: React.FC<Props> = () => {
           bgColor="#00ADE8"
           onClick={handleSubmit}
           transparent={false}
-          disabled={transferPageStore.status === 'pending'}
+          disabled={disabled}
           isLoading={transferPageStore.status === 'pending'}
         >
           Continue
@@ -98,6 +99,6 @@ export const TransferForm: React.FC<Props> = () => {
       </Box>
     </Form>
   ));
-};
+});
 
 export default TransferForm;

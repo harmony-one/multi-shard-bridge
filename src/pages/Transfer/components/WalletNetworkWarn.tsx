@@ -8,13 +8,12 @@ import { SwitchNetworkButton } from './SwitchNetworkButton';
 interface Props {}
 
 export const WalletNetworkWarn: React.FC<Props> = observer(() => {
-  const { userStore, transferPageStore } = useStores();
+  const { transferPageStore } = useStores();
 
   const requiredNetwork = transferPageStore.getRequiredNetwork();
   const destinationNetwork = transferPageStore.getDestinationNetwork();
-  let currentNetwork = userStore.getCurrentNetwork();
 
-  if (currentNetwork === requiredNetwork) {
+  if (transferPageStore.isNetworkValid()) {
     return null;
   }
 

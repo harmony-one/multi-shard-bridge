@@ -126,4 +126,10 @@ export class TransferPageStore extends StoreConstructor {
 
     return getNetworkConfig(NETWORK.HARMONY_SHARD_1);
   }
+
+  public isNetworkValid() {
+    const currentNetwork = this.stores.userStore.getCurrentNetwork();
+
+    return currentNetwork === this.getRequiredNetwork();
+  }
 }
