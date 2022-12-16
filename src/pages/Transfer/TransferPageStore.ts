@@ -6,6 +6,7 @@ import { TransferConfirmModal } from './components/TransferConfirmModal';
 import { UITransactionStatus } from '../../modules/uiTransaction/UITransactionsStore';
 import { getNetworkConfig, NETWORK } from '../../constants/network';
 import { MetaMaskNetworkConfig } from '../../interfaces/metamask';
+import { toWei } from 'web3-utils';
 
 export interface IDefaultForm {
   oneAmount: string;
@@ -65,14 +66,15 @@ export class TransferPageStore extends StoreConstructor {
     const shardId =
       this.transferMode === TRANSFER_MODE.SHARD0_TO_SHARD1 ? 1 : 0;
 
-    console.log('### this.transferMode', this.transferMode);
-    console.log('### shardId', shardId);
-
     try {
       const result = await hmyCrossShard.transfer(
-        this.form.oneAmount,
+        toWei(this.form.oneAmount),
         this.form.oneAddress,
         shardId,
+        txHash => {
+          transferUiTx.setTxHash(txHash);
+          transferUiTx.setStatusProgress();
+        },
       );
 
       // const result = await hmyClient.transfer(
