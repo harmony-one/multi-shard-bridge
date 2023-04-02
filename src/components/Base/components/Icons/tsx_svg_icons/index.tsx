@@ -52,3 +52,4 @@ export * from './Mail';
 export * from './Phone';
 export * from './ExternalLink';
 export * from './Harmony';
+export * from './ArrowDFIlled';

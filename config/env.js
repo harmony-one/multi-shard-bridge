@@ -68,9 +68,19 @@ function getClientEnvironment(publicUrl) {
         HMY_CHAIN_ID: process.env.HMY_CHAIN_ID,
         HMY_CHAIN_NAME: process.env.HMY_CHAIN_NAME,
         HMY_EXPLORER: process.env.HMY_EXPLORER,
+        
         HMY_NODE_URL_S1: process.env.HMY_NODE_URL_S1,
         HMY_CHAIN_ID_S1: process.env.HMY_CHAIN_ID_S1,
         HMY_CHAIN_NAME_S1:  process.env.HMY_CHAIN_NAME_S1,
+
+        HMY_NODE_URL_S2: process.env.HMY_NODE_URL_S2,
+        HMY_CHAIN_ID_S2: process.env.HMY_CHAIN_ID_S2,
+        HMY_CHAIN_NAME_S2:  process.env.HMY_CHAIN_NAME_S2,
+
+        HMY_NODE_URL_S3: process.env.HMY_NODE_URL_S3,
+        HMY_CHAIN_ID_S3: process.env.HMY_CHAIN_ID_S3,
+        HMY_CHAIN_NAME_S3:  process.env.HMY_CHAIN_NAME_S3,
+
         GAS_LIMIT: process.env.GAS_LIMIT,
         GAS_PRICE: process.env.GAS_PRICE,
         HMY_EXPLORER_TX: process.env.HMY_EXPLORER_TX,
