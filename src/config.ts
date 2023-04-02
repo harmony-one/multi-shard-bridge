@@ -22,6 +22,18 @@ interface Config {
       rpcUrl: string;
       explorerUrl: string;
     };
+    shard2: {
+      chainId: number;
+      chainName: string;
+      rpcUrl: string;
+      explorerUrl: string;
+    };
+    shard3: {
+      chainId: number;
+      chainName: string;
+      rpcUrl: string;
+      explorerUrl: string;
+    };
     explorer: {
       transaction: string;
       address: string;
@@ -52,6 +64,18 @@ export const config: Config = {
       chainId: Number(process.env.HMY_CHAIN_ID_S1),
       chainName: process.env.HMY_CHAIN_NAME_S1,
       rpcUrl: process.env.HMY_NODE_URL_S1,
+      explorerUrl: process.env.HMY_EXPLORER,
+    },
+    shard2: {
+      chainId: Number(process.env.HMY_CHAIN_ID_S2),
+      chainName: process.env.HMY_CHAIN_NAME_S2,
+      rpcUrl: process.env.HMY_NODE_URL_S2,
+      explorerUrl: process.env.HMY_EXPLORER,
+    },
+    shard3: {
+      chainId: Number(process.env.HMY_CHAIN_ID_S3),
+      chainName: process.env.HMY_CHAIN_NAME_S3,
+      rpcUrl: process.env.HMY_NODE_URL_S3,
       explorerUrl: process.env.HMY_EXPLORER,
     },
     nodeUrl: process.env.HMY_NODE_URL,

@@ -3,7 +3,7 @@ import { Button } from 'grommet';
 import { observer } from 'mobx-react';
 import { useStores } from '../../../stores';
 import styled from 'styled-components';
-import { TRANSFER_MODE } from '../TransferPageStore';
+import { SHARDS, TRANSFER_MODE } from '../TransferPageStore';
 import { getNetworkConfig, NETWORK } from '../../../constants/network';
 
 interface Props {}
@@ -21,19 +21,11 @@ const StyledButton = styled(Button)`
 export const SwitchNetworkButton: React.FC<Props> = observer(() => {
   const { transferPageStore, userStore } = useStores();
 
-  const networkType = useMemo(() => {
-    if (transferPageStore.transferMode === TRANSFER_MODE.SHARD0_TO_SHARD1) {
-      return NETWORK.HARMONY_SHARD_0;
-    }
-
-    return NETWORK.HARMONY_SHARD_1;
-  }, [transferPageStore.transferMode]);
-
   const switchNetwork = useCallback(() => {
-    userStore.switchNetwork(networkType);
-  }, [networkType]);
+    userStore.switchNetwork(transferPageStore.shardFrom);
+  }, [transferPageStore.shardFrom]);
 
-  const network = getNetworkConfig(networkType);
+  const network = getNetworkConfig(transferPageStore.shardFrom);
 
   return (
     <StyledButton onClick={switchNetwork}>

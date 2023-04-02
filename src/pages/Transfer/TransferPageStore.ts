@@ -22,26 +22,40 @@ export enum TRANSFER_MODE {
   SHARD1_TO_SHARD0 = 'SHARD1_TO_SHARD0',
 }
 
+export enum SHARDS {
+  SHARD0 = '0',
+  SHARD1 = '1',
+  SHARD2 = '2',
+  SHARD3 = '3',
+}
+
 export class TransferPageStore extends StoreConstructor {
   defaultForm: IDefaultForm = {
     oneAmount: '0.0001',
     oneAddress: '',
   };
 
-  @observable
-  transferMode: TRANSFER_MODE = TRANSFER_MODE.SHARD0_TO_SHARD1;
+  @observable shardFrom = SHARDS.SHARD0;
+  @observable shardTo = SHARDS.SHARD1;
+
+  // @observable
+  // transferMode: TRANSFER_MODE = TRANSFER_MODE.SHARD0_TO_SHARD1;
 
   @observable status: 'init' | 'pending' | 'success' | 'cancel' | 'error' =
     'init';
 
   @observable form = this.defaultForm;
 
+  @action.bound
   public switchDirection() {
-    if (this.transferMode === TRANSFER_MODE.SHARD0_TO_SHARD1) {
-      this.transferMode = TRANSFER_MODE.SHARD1_TO_SHARD0;
-      return;
-    }
-    this.transferMode = TRANSFER_MODE.SHARD0_TO_SHARD1;
+    // if (this.transferMode === TRANSFER_MODE.SHARD0_TO_SHARD1) {
+    //   this.transferMode = TRANSFER_MODE.SHARD1_TO_SHARD0;
+    //   return;
+    // }
+    // this.transferMode = TRANSFER_MODE.SHARD0_TO_SHARD1;
+    const value = this.shardFrom;
+    this.shardFrom = this.shardTo;
+    this.shardTo = value;
   }
 
   @action.bound
@@ -63,8 +77,7 @@ export class TransferPageStore extends StoreConstructor {
     transferUiTx.setStatusWaitingSignIn();
     transferUiTx.showModal();
 
-    const shardId =
-      this.transferMode === TRANSFER_MODE.SHARD0_TO_SHARD1 ? 1 : 0;
+    const shardId = Number(this.shardTo) as any;
 
     try {
       const result = await hmyCrossShard.transfer(
@@ -114,19 +127,11 @@ export class TransferPageStore extends StoreConstructor {
   }
 
   getRequiredNetwork(): MetaMaskNetworkConfig {
-    if (this.transferMode === TRANSFER_MODE.SHARD1_TO_SHARD0) {
-      return getNetworkConfig(NETWORK.HARMONY_SHARD_1);
-    }
-
-    return getNetworkConfig(NETWORK.HARMONY_SHARD_0);
+    return getNetworkConfig(this.shardFrom);
   }
 
   getDestinationNetwork(): MetaMaskNetworkConfig {
-    if (this.transferMode === TRANSFER_MODE.SHARD1_TO_SHARD0) {
-      return getNetworkConfig(NETWORK.HARMONY_SHARD_0);
-    }
-
-    return getNetworkConfig(NETWORK.HARMONY_SHARD_1);
+    return getNetworkConfig(this.shardTo);
   }
 
   public isNetworkValid() {

@@ -13,6 +13,7 @@ import {
   NETWORK,
 } from '../constants/network';
 import { MetaMaskNetworkConfig } from '../interfaces/metamask';
+import { SHARDS } from 'pages/Transfer/TransferPageStore';
 
 const Web3 = require('web3');
 
@@ -241,7 +242,7 @@ export class UserStoreEx extends StoreConstructor {
   }
 
   @action
-  public async switchNetwork(networkType: NETWORK) {
+  public async switchNetwork(networkType: SHARDS) {
     const config = getNetworkConfig(networkType);
 
     try {
